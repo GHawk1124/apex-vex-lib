@@ -2,8 +2,6 @@
 
 #include <math.h>
 
-#define THRESHOLD 1
-
 namespace apex {
 
 class Odometry {
@@ -11,11 +9,11 @@ public:
   Odometry(double (*leftEncoder)(void), double (*rightEncoder)(void),
            double (*sideEncoder)(void), const double wheelBase,
            const double trackingCenterToTrackingWheel,
-           const double distancePerPulse)
+           const double distancePerPulse, const double threshold)
       : m_leftEncoder(leftEncoder), m_rightEncoder(rightEncoder),
         m_sideEncoder(sideEncoder), m_wheelBase(wheelBase),
         m_trackingCenterToTrackingWheel(trackingCenterToTrackingWheel),
-        m_distancePerPulse(distancePerPulse) {}
+        m_distancePerPulse(distancePerPulse), m_threshold(threshold) {}
 
   double ticksToInches(double ticks) { return ticks * m_distancePerPulse; }
 
@@ -56,7 +54,7 @@ public:
     double displacementLocalY;
     // Calculate local offset
     // TODO: Finish Threshold
-    if (std::fabs(deltaL - deltaR) < THRESHOLD) {
+    if (std::fabs(deltaL - deltaR) < m_threshold) {
       displacementLocalX = deltaS;
       displacementLocalY = deltaL; // or deltaR
     } else {
@@ -82,6 +80,7 @@ private:
   const double m_wheelBase;
   const double m_trackingCenterToTrackingWheel;
   const double m_distancePerPulse;
+  const double m_threshold;
 
   double m_leftPos = 0;
   double m_rightPos = 0;

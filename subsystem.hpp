@@ -3,12 +3,17 @@
 #include "stateMachine.hpp"
 
 namespace apex {
-class subsystem : public StateMachine {
+class SubsystemData : public EventData {
 public:
-  void init();
+  int test;
+};
 
-  void execute();
+class Subsystem : public StateMachine {
+public:
+  virtual void init();
 
-  void shutdown();
+  virtual void execute();
+
+  virtual void shutdown();
 };
 } // namespace apex

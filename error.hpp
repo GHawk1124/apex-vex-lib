@@ -13,12 +13,9 @@ template <typename RT> struct motorInfo {
 };
 
 template <typename RT> void checkForCurrentDraw(motorInfo<RT> *info) {
-  // TODO: Make this only stop affected motors
-  for (auto draw : info->draws) {
-    if (draw() > info->threshold) {
-      for (auto stop : info->stops) {
-        stop();
-      }
+  for (int i; i < info->draws.len; i++) {
+    if (info->draws[i]() > info->threshold) {
+      info->stops[i]();
     }
   }
 }
