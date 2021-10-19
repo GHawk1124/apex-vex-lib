@@ -53,7 +53,6 @@ public:
     double displacementLocalX;
     double displacementLocalY;
     // Calculate local offset
-    // TODO: Finish Threshold
     if (std::fabs(deltaL - deltaR) < m_threshold) {
       displacementLocalX = deltaS;
       displacementLocalY = deltaL; // or deltaR
